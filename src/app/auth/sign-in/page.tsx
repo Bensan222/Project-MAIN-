@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import { passwordSchema } from "@/schemas/phone-number";
 import {
   FormField,
@@ -23,12 +23,15 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
+import { login, signup } from "@/actions/auth";
+import { useMutation } from "@tanstack/react-query";
+import { SignUpForm } from "../sign-up/page";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: passwordSchema,
 });
-type LoginForm = z.infer<typeof formSchema>;
+export type LoginForm = z.infer<typeof formSchema>;
 
 export default function Page() {
   const form = useForm<LoginForm>({
@@ -39,15 +42,19 @@ export default function Page() {
     resolver: zodResolver(formSchema),
   });
 
+  const router = useRouter();
+  const mutation = useMutation({
+    mutationKey: ["sign-in"],
+    mutationFn: (data: LoginForm) => login(data),
+  });
+
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    // TODO: Implement the login logic
-    // For example, you might call an API to authenticate the user
-    // mutation.mutate(data, {
-    //   onSuccess: (data) => {
-    //     form.reset();
-    //     router.push("/dashboard"); // Redirect to a dashboard or home page after successful login
-    //   },
-    // });
+    mutation.mutate(data, {
+      onSuccess: () => {
+        form.reset();
+        router.push("/dashboard");
+      },
+    });
   };
 
   return (

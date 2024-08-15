@@ -22,15 +22,24 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
+import { signup } from "@/actions/auth";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
   name: z.string().min(1),
   password: passwordSchema,
 });
-type SignUpForm = z.infer<typeof formSchema>;
+export type SignUpForm = z.infer<typeof formSchema>;
 
 export default function Page() {
+  const router = useRouter();
+  const mutation = useMutation({
+    mutationKey: ["sign-up"],
+    mutationFn: (data: SignUpForm) => signup(data),
+  });
+
   const form = useForm<SignUpForm>({
     defaultValues: {
       email: "",
@@ -41,13 +50,12 @@ export default function Page() {
   });
 
   const onSubmit: SubmitHandler<SignUpForm> = (data) => {
-    // TODO:
-    // mutation.mutate(data, {
-    //   onSuccess: (data) => {
-    //     form.reset();
-    //     router.push(pathname + "?" + createQueryString("hash", data.hash));
-    //   },
-    // });
+    mutation.mutate(data, {
+      onSuccess: () => {
+        form.reset();
+        router.push("/dashboard");
+      },
+    });
   };
 
   return (

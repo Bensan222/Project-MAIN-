@@ -8,18 +8,17 @@ import {
 } from "@/actions/definition";
 import { createSession, deleteSession } from "@/actions/session";
 import bcrypt from "bcryptjs";
+import { SignUpForm } from "@/app/auth/sign-up/page";
+import { LoginForm } from "@/app/auth/sign-in/page";
 
 const db = new PrismaClient();
 
-export async function signup(
-  state: FormState,
-  formData: FormData,
-): Promise<FormState> {
+export async function signup(formData: SignUpForm): Promise<FormState> {
   // 1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
-    name: formData.get("name"),
-    email: formData.get("email"),
-    password: formData.get("password"),
+    name: formData["name"],
+    email: formData["email"],
+    password: formData["password"],
   });
 
   // If any form fields are invalid, return early
@@ -69,14 +68,11 @@ export async function signup(
   await createSession(userId);
 }
 
-export async function login(
-  state: FormState,
-  formData: FormData,
-): Promise<FormState> {
+export async function login(formData: LoginForm): Promise<FormState> {
   // 1. Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
+    email: formData["email"],
+    password: formData["password"],
   });
   const errorMessage = { message: "Invalid login credentials." };
 
