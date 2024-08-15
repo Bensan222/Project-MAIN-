@@ -25,6 +25,7 @@ import {
 
 const formSchema = z.object({
   email: z.string().email(),
+  name: z.string().min(1),
   password: passwordSchema,
 });
 type SignUpForm = z.infer<typeof formSchema>;
@@ -33,6 +34,7 @@ export default function Page() {
   const form = useForm<SignUpForm>({
     defaultValues: {
       email: "",
+      name: "",
       password: "",
     },
     resolver: zodResolver(formSchema),
@@ -88,6 +90,20 @@ export default function Page() {
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
                         <Input placeholder="johndoe@example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John Doe" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
