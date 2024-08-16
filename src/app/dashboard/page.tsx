@@ -1,11 +1,18 @@
-import React from 'react'
+import React from "react";
+import { SuspectTable } from "./suspect-table";
+import { useGetSuspects } from "@/hooks/api/get-suspects";
 
-type Props = {}
+type Props = {};
 
 const Page = (props: Props) => {
-  return (
-    <div>Page</div>
-  )
-}
+  const { data } = useGetSuspects();
 
-export default Page
+  return (
+    <div className="w-full px-20 p-6">
+      Page
+      <SuspectTable data={data} />
+    </div>
+  );
+};
+
+export default Page;
