@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Suspect" ALTER COLUMN "id" DROP DEFAULT;

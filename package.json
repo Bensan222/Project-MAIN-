@@ -16,9 +16,6 @@
     "db:migrate-reset": "dotenv -e .env.local prisma migrate reset -f",
     "db:seed": "dotenv -e .env.local prisma db seed"
   },
-  "prisma": {
-    "seed": "tsx ./prisma/seed.ts"
-  },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.9.0",
@@ -75,6 +72,10 @@
     "tailwindcss": "^3.4.10",
     "tsx": "^4.17.0",
     "typescript": "^5.5.4"
+  },
+
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }

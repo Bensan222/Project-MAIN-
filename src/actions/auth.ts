@@ -69,6 +69,7 @@ export async function signup(formData: SignUpForm): Promise<FormState> {
 }
 
 export async function login(formData: LoginForm): Promise<FormState> {
+  console.log(formData)
   // 1. Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email: formData["email"],
@@ -78,6 +79,7 @@ export async function login(formData: LoginForm): Promise<FormState> {
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
+    console.log("GOT HERE", validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
     };
@@ -100,6 +102,7 @@ export async function login(formData: LoginForm): Promise<FormState> {
     user.password,
   );
 
+    console.log("Password don't match,:", passwordMatch)
   // If the password does not match, return early
   if (!passwordMatch) {
     return errorMessage;

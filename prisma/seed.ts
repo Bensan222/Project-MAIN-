@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 try {
   await prisma.user.create({
     data: {
       name: "John Doe",
-      password: "Password123$",
+      password: await bcrypt.hash("Password123$", 10),
       email: "johndoe@example.com",
     },
   });

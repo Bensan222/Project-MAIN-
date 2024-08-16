@@ -66,6 +66,18 @@ export function SuspectTable({ data }: SuspectTableProps) {
     },
   });
 
+  const handlePreviousPage = () => {
+    if (table.getState().pagination.pageIndex > 0) {
+      table.setPageIndex(table.getState().pagination.pageIndex - 1);
+    }
+  };
+  const handleNextPage = () => {
+    if (table.getState().pagination.pageIndex < table.getPageCount() - 1) {
+      table.setPageIndex(table.getState().pagination.pageIndex + 1);
+    }
+  };
+  const currentPage = table.getState().pagination.pageIndex;
+
   return (
     <>
       <div className="flex justify-between items-center mb-4">
@@ -77,7 +89,7 @@ export function SuspectTable({ data }: SuspectTableProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button onClick={handleAddNew}>Add New Suspect</Button>
+          <Button onClick={() => alert("TO BE ADDED LATER")}>Add New Suspect</Button>
         </div>
       </div>
       <div className="overflow-auto border rounded-lg">

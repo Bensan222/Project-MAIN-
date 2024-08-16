@@ -1,3 +1,5 @@
+'use client'
+
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/api-client";
 import { Suspect } from "@prisma/client";
